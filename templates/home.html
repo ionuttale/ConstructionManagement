@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="..\static\css\navigation.css">
+    <link rel="stylesheet" href="..\static\css\dashboard.css">  
+</head>
+<body>
+    <nav class = "navbar">
+        <ul>
+            <li><a href ="{{ url_for('home') }}">Home</a></li>
+            <li><a href ="{{ url_for('builders') }}">Builder</a></li>
+            <li><a href ="{{ url_for('clients') }}">Clients</a></li>
+            <li><a href ="{{ url_for('projects') }}">Projects</a></li>
+            <li><a href ="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href ="{{ url_for('about') }}">About</a></li>
+        </ul>
+    </nav>
+    
+    <!-- <div class = "dashboard">
+        <div class = "container">
+            <div class = "box">
+                <div class="card">
+                    <div class="icon">
+                        <img src="..\static\images\patient.svg" alt="Icon"> 
+                    </div>
+                    <div>
+                        <div class="title">Total Patients</div>
+                        <div class="count"><span id = "total-patients">Loading...</span></div>
+                    </div>
+                </div>
+                <button class="details-button" onclick="window.location.href='{{ url_for('patients') }}'">Show Details</button>
+            </div>
+            <div class = "box">
+                <div class = "card">
+                    <div class="icon">
+                        <img src="..\static\images\medicine.svg" alt="Icon"> 
+                    </div>
+                    <div>
+                        <div class="title">Total Medicines</div>
+                        <div class="count"><span id = "total-medicines">Loading...</span></div>
+                    </div>
+                </div>
+                <button class="details-button" onclick="window.location.href='{{ url_for('products') }}'">Show Details</button>
+            </div>
+            <div class = "box">
+                <div class = "card">
+                    <div class="icon">
+                        <img src="..\static\images\profit.svg" alt="Icon"> 
+                    </div>
+                    <div>
+                        <div class="title">Total Profit</div>
+                        <div class="count">
+                            <span id = "total-profit">Loading...</span>
+                            <span class="euro-symbol">€</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="details-button" onclick="window.location.href='{{ url_for('purchases') }}'">Show Details</button>
+            </div>
+            <div class = "box">
+                <div class="card">
+                    <div class="icon">
+                        <img src="..\static\images\stock.svg" alt="Icon"> 
+                    </div>
+                    <div>
+                        <div class="title">Out of stock</div>
+                        <div class="count"><span id = "out-of-stock">Loading...</span></div>
+                    </div>
+                </div>
+                <button class="details-button" onclick="window.location.href='{{ url_for('products') }}'">Show Details</button>
+            </div>
+        </div>
+
+        <div class = "container">
+                <div class="table-container">
+                    <h1>Expiring List</h1>
+                    <table id="table1" data-sort-order = "asc">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Medicine Name
+                                    <button class="icon-button" onclick = "sortTable('table1', 0)">
+                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                            
+                                            </svg>
+                                    </button>
+                                </th>
+                                <th>
+                                    Expire Date
+                                    <button class="icon-button" onclick = "sortTable('table1', 1)">
+                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                            
+                                            </svg>
+                                    </button>
+                                </th>
+                                <th>
+                                    Quantity
+                                    <button class="icon-button" onclick = "sortTable('table1', 2)">
+                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                            
+                                            </svg>
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="medicine-list">
+                          
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <h1>Recent Orders</h1>
+                    <table id = "table2" data-sort-order = "asc">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Medicine Name
+                                    <button class="icon-button" onclick = "sortTable('table2', 0)">
+                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                            
+                                            </svg>
+                                    </button>
+                                </th>
+                                <th>
+                                    Patient Name
+                                    <button class="icon-button" onclick = "sortTable('table2', 1)">
+                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                            
+                                            </svg>
+                                    </button>
+                                </th>
+                                <th>
+                                    Quantity
+                                    <button class="icon-button" onclick = "sortTable('table2', 2)">
+                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                            
+                                            </svg>
+                                    </button>
+                                </th>
+                                <th>
+                                    Date
+                                    <button class="icon-button" onclick = "sortTable('table2', 3)">
+                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                            
+                                            </svg>
+                                    </button>
+                                </th>
+                                <th>
+                                    Total
+                                    <button class="icon-button" onclick = "sortTable('table2', 4)">
+                                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                            
+                                            </svg>
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-sales">
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        <div class = "container">
+            <div class = "chart-income">
+                <h2>Monthly Income</h2>
+                <canvas id="incomeChart" width="400" height="200"></canvas>   
+            </div>
+        </div>
+    </div>
+    <script src="..\static\js\dashboard.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

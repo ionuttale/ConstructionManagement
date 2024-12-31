@@ -1,0 +1,46 @@
+body{
+    margin: 0px;
+}
+
+main{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+.navbar ul{
+    list-style-type: none;
+    background-color: rgb(37, 37, 37);
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.navbar a{
+    color: #2f774e;
+    text-decoration: none;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar a:hover{
+    background-color: rgb(15, 15, 15);
+}
+
+.navbar li{
+    float: left;
+}
+
+.logo{
+    padding: 0px;
+    margin-left: 10px;
+    width: 25%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+}
