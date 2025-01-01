@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Project</title>
+    <link rel="stylesheet" href="..\static\css\navigation.css">
+    <link rel="stylesheet" href="..\static\css\add.css">  
+</head>
+<body class="projects">
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('builders') }}">Builders</a></li>
+            <li><a href="{{ url_for('clients') }}">Clients</a></li>
+            <li><a href="{{ url_for('projects') }}">Projects</a></li>
+            <li><a href="{{ url_for('go_add_project') }}">Add Project</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2>Create New Project</h2>
+        <form id="addProjectForm">
+            <!-- Client Information -->
+            <label for="client_first_name">Client First Name:</label>
+            <input type="text" id="client_first_name" name="client_first_name" required>
+
+            <label for="client_last_name">Client Last Name:</label>
+            <input type="text" id="client_last_name" name="client_last_name" required>
+
+            <!-- Builder Information -->
+            <label for="builder_first_name">Builder First Name:</label>
+            <input type="text" id="builder_first_name" name="builder_first_name" required>
+
+            <label for="builder_last_name">Builder Last Name:</label>
+            <input type="text" id="builder_last_name" name="builder_last_name" required>
+
+            <!-- Project Information -->
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+
+            <label for="project_status">Project Status:</label>
+            <select id="project_status" name="project_status" required>
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="On Hold">On Hold</option>
+            </select>
+
+            <label for="project_budget">Project Budget:</label>
+            <input type="text" id="project_budget" name="project_budget" step="0.01" required>
+
+            <div class="modal-footer">
+                <button type="submit">Save Project</button>
+            </div>
+        </form>
+    </div>
+    <script src="..\static\js\add_project.js"></script>
+</body>
+</html>

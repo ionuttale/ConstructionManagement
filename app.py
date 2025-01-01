@@ -125,6 +125,43 @@ def recent_builders():
 def clients():
     return render_template('clients.html')
 
+@app.route('/go-add-client')
+def go_add_client():
+    return render_template('add_client.html')
+
+@app.route('/add_client', methods=['POST'])
+def add_client():
+    data = request.get_json()
+
+    first_name = data['first_name']
+    last_name = data['last_name']
+    phone = data.get('phone', None)  # Optional field
+    email = data.get('email', None)  # Optional field
+    address = data.get('address', None)  # Optional field
+    client_type = data['client_type']
+    birth_date = data.get('birth_date', None)  # Optional field
+    number_of_projects = data['number_of_projects']
+
+    # Create cursor
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # Insert client into the database
+    try:
+        query = """
+        INSERT INTO Clients (First_Name, Last_Name, Phone, Email, Address, Registration_Date, Client_Type, Birth_Date, Number_of_Projects)
+        VALUES (%s, %s, %s, %s, %s, CURDATE(), %s, %s, %s)
+        """
+        cursor.execute(query, (first_name, last_name, phone, email, address, client_type, birth_date, number_of_projects))
+
+        # Commit changes
+        mysql.connection.commit()
+        cursor.close()
+
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
 @app.route('/api/get-clients', methods=['GET'])
 def get_clients():
     try:
@@ -218,6 +255,44 @@ def update_client():
 def builders():
     return render_template('builders.html')
 
+@app.route('/go-add-builder')
+def go_add_builder():
+    return render_template('add_builder.html')
+
+@app.route('/api/add-builder', methods=['POST'])
+def add_builder():
+    try:
+        # Parse the JSON request
+        data = request.get_json()
+        first_name = data.get('first_name')
+        last_name = data.get('last_name')
+        specialization = data.get('specialization')
+        phone = data.get('phone')
+        email = data.get('email')
+        address = data.get('address')
+        hiring_date = data.get('hiring_date')
+        experience_years = data.get('experience_years')
+        salary = data.get('salary')
+
+        # Validate required fields
+        if not all([first_name, last_name, phone, email, address, hiring_date, experience_years, salary]):
+            return jsonify({'message': 'error', 'details': 'All fields are required'}), 400
+
+        # Insert data into the Builders table
+        cursor = mysql.connection.cursor()
+        query = """
+            INSERT INTO Builders (First_Name, Last_Name, Specialization, Phone, Email, Address, Hiring_Date, Experience_Years, Salary)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, (first_name, last_name, specialization, phone, email, address, hiring_date, experience_years, salary))
+        mysql.connection.commit()
+        cursor.close()
+
+        return jsonify({'message': 'success'})
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'message': 'error', 'details': str(e)}), 500
+
 @app.route('/api/get-builders', methods=['GET'])
 def get_builders():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -275,6 +350,57 @@ def update_builder():
 @app.route('/projects')
 def projects():
     return render_template('projects.html')
+
+@app.route('/go-add-project')
+def go_add_project():
+    return render_template('add_project.html')
+
+@app.route('/add_project', methods=['POST'])
+def add_project():
+    data = request.get_json()
+
+    client_first_name = data['client_first_name']
+    client_last_name = data['client_last_name']
+    builder_first_name = data['builder_first_name']
+    builder_last_name = data['builder_last_name']
+    start_date = data['start_date']
+    project_status = data['project_status']
+    project_budget = data['project_budget']
+
+    # Create cursor
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    # Find the Client_ID based on client name
+    cursor.execute("SELECT Client_ID FROM Clients WHERE First_Name=%s AND Last_Name=%s", (client_first_name, client_last_name))
+    client = cursor.fetchone()
+    if not client:
+        return jsonify({'success': False, 'error': 'Client not found'})
+
+    # Find the Builder_ID based on builder name
+    cursor.execute("SELECT Builder_ID FROM Builders WHERE First_Name=%s AND Last_Name=%s", (builder_first_name, builder_last_name))
+    builder = cursor.fetchone()
+    if not builder:
+        return jsonify({'success': False, 'error': 'Builder not found'})
+
+    client_id = client['Client_ID']
+    builder_id = builder['Builder_ID']
+
+    # Insert project into the Projects_Builders table
+    try:
+        query = """
+        INSERT INTO Projects_Builders (Client_ID, Builder_ID, Start_Date, Project_Status, Project_Budget)
+        VALUES (%s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, (client_id, builder_id, start_date, project_status, project_budget))
+
+        # Commit changes
+        mysql.connection.commit()
+        cursor.close()
+
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/api/get-projects', methods=['GET'])
 def get_projects():

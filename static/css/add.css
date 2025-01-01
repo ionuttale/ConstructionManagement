@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #2f774e;
+}
+
+body::-webkit-scrollbar {
+  display: none; /* This hides the scrollbar in Webkit browsers (e.g., Chrome, Safari) */
+}
+
+.container{
+    width: 92%;
+    margin: 0 auto;
+    margin-top: 10px;
+    height: 100%;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between inputs and button */
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="date"], input[type="gender"] {
+    padding: 15px;
+    font-size: 1.2rem;
+    background-color: rgb(37, 37, 37); 
+    color: #2f774e;
+    border: 1px solid rgb(37, 37, 37); 
+    border-radius: 8px;
+    outline: none;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="date"]:focus, input[type="gender"]:focus {
+    border-color: #2f774e;
+    box-shadow: 0 0 8px rgba(47, 119, 78, 0.5);
+}
+
+select {
+    padding: 15px;
+    font-size: 1.2rem;
+    background-color: rgb(37, 37, 37);
+    color: #2f774e;
+    border: 1px solid rgb(37, 37, 37);
+    border-radius: 8px;
+    outline: none;
+    width: 100%; /* Make the select width fill its container */
+    max-width: 300px; /* Optional: you can limit the max-width if desired */
+    margin: 0 auto; /* Center the select horizontally */
+}
+
+/* Apply focus styles to the select element */
+select:focus {
+    border-color: #2f774e;
+    box-shadow: 0 0 8px rgba(47, 119, 78, 0.5);
+}
+
+form label {
+    margin: auto;
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  form input {
+    width: 30; /* Ensure inputs fill the width */
+    padding: 8px;
+    margin: auto;
+    margin-bottom: 15px;
+    border: 1px solid #000000c9; /* Dark border for inputs */
+    border-radius: 4px;
+    background-color: #222; /* Slightly darker background for inputs */
+    color: #2f774e; /* Green text */
+  }
+
+  /* Style for buttons inside the modal-footer */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    margin: auto;
+  }
+  
+  /* Targeting button inside .modal-footer */
+  .modal-footer button {
+    padding: 10px 20px;
+    background-color: #2f774e; /* Green background */
+    color: rgb(0, 0, 0); /* Black text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 30px;
+  }
+  
+  /* Change background color of footer button on hover */
+  .modal-footer button:hover {
+    background-color: #4CAF50; /* Light green on hover */
+  }
+  
+  /* Additional styles for the submit button specifically */
+  .modal-footer button[type="submit"] {
+    background-color: #2f774e; /* Green background for submit button */
+    color: rgb(0, 0, 0); /* Black text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Hover effect for submit button */
+  .modal-footer button[type="submit"]:hover {
+    background-color: #4CAF50; /* Light green on hover */
+  }
