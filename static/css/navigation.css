@@ -1,25 +1,38 @@
-body{
+body {
     margin: 0px;
 }
 
-main{
+main {
     margin-left: 20px;
     margin-right: 20px;
 }
 
-h1{
+h1 {
     text-align: center;
 }
 
-.navbar ul{
-    list-style-type: none;
-    background-color: rgb(37, 37, 37);
+.navbar {
+    display: flex;
+    justify-content: center;  /* This centers the navbar in the middle */
+    background-color: rgb(37, 37, 37); /* Dark grey background */
     padding: 0px;
     margin: 0px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    display: flex;  /* Aligns the list items in a row */
+    justify-content: center;  /* Centers the list items */
     overflow: hidden;
 }
 
-.navbar a{
+.navbar li {
+    margin: 0 15px;  /* Adds spacing between navigation items */
+}
+
+.navbar a {
     color: #2f774e;
     text-decoration: none;
     padding: 15px;
@@ -28,19 +41,7 @@ h1{
     justify-content: space-between;
 }
 
-.navbar a:hover{
+.navbar a:hover {
     background-color: rgb(15, 15, 15);
 }
 
-.navbar li{
-    float: left;
-}
-
-.logo{
-    padding: 0px;
-    margin-left: 10px;
-    width: 25%;
-    height: auto;
-    display: flex;
-    justify-content: flex-start;
-}

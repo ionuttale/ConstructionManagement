@@ -1,0 +1,176 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #2f774e;
+}
+
+body::-webkit-scrollbar {
+  display: none; /* This hides the scrollbar in Webkit browsers (e.g., Chrome, Safari) */
+}
+
+.container{
+    width: 92%;
+    margin: 0 auto;
+    margin-top: 10px;
+    height: 100%;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  thead th {
+    background-color: rgb(15, 15, 15);
+    color: #2f774e;
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  
+  tbody td {
+    font-size: 18px;
+    padding: 10px;
+    border-bottom: 1px;
+    text-align: center;
+  }
+  
+  tbody tr:hover {
+    background-color: rgb(15, 15, 15);
+  }
+  
+  .icon-button, .remove-btn, .modify-btn {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    position: center;
+  }
+  
+  .icon-button svg, .remove-btn svg, .modify-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between inputs and button */
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    padding: 15px;
+    font-size: 1.2rem;
+    background-color: rgb(37, 37, 37); 
+    color: #2f774e;
+    border: 1px solid rgb(37, 37, 37); 
+    border-radius: 8px;
+    outline: none;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    border-color: #2f774e;
+    box-shadow: 0 0 8px rgba(47, 119, 78, 0.5);
+}
+
+/* Style for the modal background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;  /* Ensure the modal covers the entire screen width */
+  height: 100%; /* Full height of the screen */
+  background-color: rgba(0, 0, 0, 0.856); /* Semi-transparent black background */
+  display: flex; /* Use flexbox to center modal content */
+  justify-content: center; /* Center the modal content horizontally */
+  align-items: center; /* Center the modal content vertically */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Modal content box */
+.modal-content {
+  background-color: #000000a8; /* Dark background with slight transparency */
+  padding: 20px;
+  border-radius: 5px;
+  width:40%; /* Adjust width as needed */
+  max-height: 90vh; /* Set max height to 70% of the screen height */
+  overflow-y: auto; /* Make content scrollable if it exceeds the max height */
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a slight 3D effect */
+  overflow-x: hidden; /* Prevent horizontal overflow inside the content */
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 0px;  /* Remove the scrollbar width */
+  background: transparent; /* Make the background of the scrollbar transparent */
+}
+
+/* Close button */
+.close {
+  color: #2f774e; /* Green color for close button */
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  cursor: pointer;
+}
+
+/* Change color when hovering or focusing on the close button */
+.close:hover,
+.close:focus {
+  color: #4CAF50; /* Lighter green on hover */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Styling for form inputs inside the modal */
+form label {
+  margin: auto;
+  display: block;
+  margin: 10px 0 5px;
+}
+
+form input {
+  width: 30; /* Ensure inputs fill the width */
+  padding: 8px;
+  margin: auto;
+  margin-bottom: 15px;
+  border: 1px solid #000000c9; /* Dark border for inputs */
+  border-radius: 4px;
+  background-color: #222; /* Slightly darker background for inputs */
+  color: #2f774e; /* Green text */
+}
+
+/* Styling for the footer buttons inside the modal */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  margin: auto;
+}
+
+.modal-footer button {
+  padding: 10px 20px;
+  background-color: #2f774e; /* Green background */
+  color: rgb(0, 0, 0); /* Black text */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Change background color of footer button on hover */
+.modal-footer button:hover {
+  background-color: #4CAF50; /* Light green on hover */
+}

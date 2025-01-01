@@ -19,306 +19,338 @@ def index():
 def home():
     return render_template('home.html')
 
-# @app.route('/api/dashboard_data')
-# def dashboard_data():
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+@app.route('/api/dashboard_data')
+def dashboard_data():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    try:
+        # Get Total Builders
+        cursor.execute('SELECT COUNT(*) AS total_builders FROM Builders')
+        total_builders = cursor.fetchone()['total_builders']
         
-   
-#     cursor.execute('SELECT COUNT(*) AS total_patients FROM Patients')
-#     total_patients = cursor.fetchone()['total_patients']
+        # Get Total Projects
+        cursor.execute('SELECT COUNT(*) AS total_projects FROM Projects_Builders')
+        total_projects = cursor.fetchone()['total_projects']
         
-   
-#     cursor.execute('SELECT COUNT(*) AS total_medicines FROM Medicines')
-#     total_medicines = cursor.fetchone()['total_medicines']
+        # Get Total Profit (adjust the query based on your schema)
+        cursor.execute('SELECT SUM(Project_Budget) AS total_profit FROM Projects_Builders')
+        total_profit = cursor.fetchone()['total_profit'] or 0  # Default to 0 if None
+        
+        print(f"Total Profit: {total_profit}")
+
+        # Get Average Monthly Salary (assuming Salary is annual)
+        cursor.execute('SELECT AVG(Salary) AS avg_salary FROM Builders')
+        avg_salary = cursor.fetchone()['avg_salary'] or 0  # Default to 0 if None
+        avg_monthly_salary = avg_salary  # Convert to monthly salary
+        
+    except Exception as e:
+        print(f"Error occurred while fetching data: {e}")
+        total_builders = total_projects = total_profit = avg_monthly_salary = 0
+    finally:
+        cursor.close()
+
+    return jsonify({
+        "total_builders": total_builders,
+        "total_projects": total_projects,
+        "total_profit": total_profit,
+        "avg_monthly_wage": avg_monthly_salary
+    })
+
+
+@app.route('/api/recent_projects')
+def recent_projects():
+    try:
+        # Create a cursor to interact with the database
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        
+        # Execute the query to get recent projects
+        cursor.execute('''
+            SELECT pb.Project_ID, c.First_Name AS client_first_name, c.Last_Name AS client_last_name,
+                   b.First_Name AS builder_first_name, b.Last_Name AS builder_last_name,
+                   pb.Start_Date, pb.Project_Status, pb.Project_Budget
+            FROM Projects_Builders pb
+            JOIN Clients c ON pb.Client_ID = c.Client_ID
+            JOIN Builders b ON pb.Builder_ID = b.Builder_ID
+            ORDER BY pb.Start_Date DESC
+            LIMIT 10
+        ''')
+        
+        # Fetch the results of the query
+        projects = cursor.fetchall()
+
+        # Close the cursor after the operation is complete
+        cursor.close()
+
+        # Return the results as a JSON response
+        return jsonify(projects)
+
+    except Exception as e:
+        # Handle errors (e.g., database connection issues)
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/recent_builders')
+def recent_builders():
+    try:
+        # Establish database connection
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        
+        # Execute the query to fetch recent builders
+        cursor.execute('''
+            SELECT b.First_Name AS builder_first_name, b.Last_Name AS builder_last_name, b.Experience_Years
+            FROM Builders b
+            ORDER BY b.Experience_Years DESC
+            LIMIT 10
+        ''')
+        
+        # Fetch the results
+        builders = cursor.fetchall()
+        
+        # Close the cursor
+        cursor.close()
+
+        # Return the results as JSON
+        return jsonify(builders)
     
-   
-#     cursor.execute('SELECT SUM(pm.quantity * m.price) as total_sales FROM Patients_medicines pm, Medicines m WHERE pm.id_medicine = m.id')
-#     total_sales = cursor.fetchone()['total_sales']
+    except MySQLdb.DatabaseError as db_error:
+        # Handle database-specific errors (e.g., connection failure, query issues)
+        print(f"Database error: {db_error}")
+        return jsonify({"error": "Database error occurred. Please try again later."}), 500
     
-
-#     cursor.execute('SELECT COUNT(*) AS out_of_stock FROM Medicines WHERE quantity = 0')
-#     out_of_stock = cursor.fetchone()['out_of_stock']
-    
-
-#     cursor.close()
-
-#     return jsonify({
-#         "total_patients": total_patients,
-#         "total_medicines": total_medicines,
-#         "total_sales": total_sales,
-#         "out_of_stock": out_of_stock or 0
-#     })
-
-# @app.route('/api/expiring_medicines')
-# def expiring_medicines():
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cursor.execute('''
-#         SELECT name, expiration_date, quantity
-#         FROM Medicines
-#         WHERE expiration_date <= DATE_ADD(CURDATE(), INTERVAL 3 MONTH)
-#         ORDER BY expiration_date ASC
-#     ''')
-#     medicines = cursor.fetchall()
-#     cursor.close()
-#     return jsonify(medicines)
-
-
-# @app.route('/api/get_monthly_income')
-# def get_monthly_income():
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-
-#     cursor.execute("""
-#     SELECT 
-#         DATE_FORMAT(pm.sale_date, '%Y-%m') AS month,  -- Format the date as 'Year-Month'
-#         SUM(m.price * pm.quantity) AS total_income
-#     FROM 
-#         Patients_medicines pm
-#     JOIN 
-#         Medicines m ON pm.id_medicine = m.id
-#     JOIN 
-#         Patients p ON pm.id_patient = p.id
-#     WHERE 
-#         pm.sale_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 11 MONTH), '%Y-%m-01')
-#     GROUP BY 
-#         month
-#     ORDER BY 
-#         month DESC;
-#     """)
-
-#     result = cursor.fetchall()
-    
-#     months = [row['month'] for row in result]  
-#     income = [row['total_income'] for row in result]  
-
-#     cursor.close()
-
-#     return jsonify({
-#         'months': months,
-#         'income': income
-#     })
-
-
-# @app.route('/api/recent_sales')
-# def recent_sales():
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cursor.execute('''
-#         SELECT p.name AS patient_name, m.name AS medicine_name, pm.sale_date, pm.quantity, m.price * pm.quantity AS total_price
-#         FROM Patients_medicines pm
-#         JOIN Patients p ON pm.id_patient = p.id
-#         JOIN Medicines m ON pm.id_medicine = m.id
-#         ORDER BY pm.sale_date DESC
-#         LIMIT 10
-#     ''')
-#     sales = cursor.fetchall()
-#     cursor.close()
-#     return jsonify(sales)
-
-@app.route('/builders')
-def builders():
-    return render_template('builders.html')
-
-# @app.route('/api/get-patients')
-# def get_patients():
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cursor.execute('SELECT * FROM Patients')
-#     patients = cursor.fetchall()
-#     cursor.close()
-#     return jsonify(patients)
-
-# @app.route('/api/delete-patient/<int:id>', methods=['DELETE'])
-# def delete_patient(id):
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cursor.execute('DELETE FROM Patients WHERE id = %s', (id,))
-#     mysql.connection.commit()
-#     cursor.close()
-#     return jsonify({'message': 'Patient deleted successfully'})
-
-# @app.route('/api/update-patient', methods=['POST'])
-# def update_patient():
-#     data = request.get_json()
-#     patient_id = data['id']
-#     name = data['name']
-#     surname = data['surname']
-#     phone_number = data['phone_number']
-#     address = data['address']
-#     email = data['email']
-
-#     cursor = mysql.connection.cursor()
-#     cursor.execute('''UPDATE Patients SET name = %s, surname = %s, phone_number = %s, address = %s, email = %s
-#                       WHERE id = %s''',
-#                    (name, surname, phone_number, address, email, patient_id))
-#     mysql.connection.commit()
-#     cursor.close()
-
-#     return jsonify({'message': 'success'})
-
-# @app.route('/api/go_add_patient')
-# def go_add_patient():
-#     return render_template('add_patient.html')
-
-# @app.route('/api/add-patient', methods=['POST'])
-# def add_patient():
-#     patient_data = request.get_json()
-
-#     name = patient_data.get('name')
-#     surname = patient_data.get('surname')
-#     cnp = patient_data.get('cnp')
-#     birthday = patient_data.get('birthday')
-#     gender = patient_data.get('gender')
-#     address = patient_data.get('address')
-#     phone_number = patient_data.get('phone_number')
-#     email = patient_data.get('email')
-#     diagnosis = patient_data.get('diagnosis')
-
-#     if not all([name, surname, cnp, birthday, gender, address, phone_number, email, diagnosis]):
-#         return jsonify({'message': 'Missing required fields'}), 400
-
-#     query = """
-#     INSERT INTO Patients (name, surname, cnp, birthday, gender, address, phone_number, email, diagnosis)
-#     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-#     """
-#     cursor = mysql.connection.cursor()
-
-#     try:
-#         cursor.execute(query, (name, surname, cnp, birthday, gender, address, phone_number, email, diagnosis))
-#         mysql.connection.commit()
-
-#         cursor.close()
-#         return jsonify({'message': 'Patient added successfully!'}), 200
-#     except Exception as e:
-#         print("Error inserting patient:", e)
-#         cursor.close()
-#         return jsonify({'message': 'Failed to add patient'}), 500
-
+    except Exception as e:
+        # Handle any unexpected errors
+        print(f"An error occurred: {e}")
+        return jsonify({"error": "An unexpected error occurred. Please try again later."}), 500
 
 @app.route('/clients')
 def clients():
     return render_template('clients.html')
 
-# @app.route('/api/get-products')
-# def get_medicines():
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cursor.execute('SELECT * FROM Medicines')
-#     medicines = cursor.fetchall()
-#     cursor.close()
-#     return jsonify(medicines)
+@app.route('/api/get-clients', methods=['GET'])
+def get_clients():
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM Clients")
+        rows = cursor.fetchall()
 
-# @app.route('/api/delete-product/<int:id>', methods=['DELETE'])
-# def delete_product(id):
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cursor.execute('DELETE FROM Medicines WHERE id = %s', (id,))
-#     mysql.connection.commit()
-#     cursor.close()
-#     return jsonify({'message': 'Product deleted successfully'})
+        if not rows:
+            return jsonify({'error': 'No clients found'}), 404
 
-# @app.route('/go_add_product')
-# def go_add_product():
-#     return render_template('add_product.html')
+        clients = []
+        for row in rows:
+            client = {
+                'id': row[0],
+                'first_name': row[1],
+                'last_name': row[2],
+                'phone_number': row[3],
+                'email': row[4],
+                'address': row[5],
+                'registration_date': row[6],
+                'client_type': row[7],
+                'birth_date': row[8],
+                'number_of_projects': row[9]
+            }
+            clients.append(client)
 
-# @app.route('/api/add_product', methods=['POST'])
-# def add_product():
-#     try:
-#         medicine_data = request.get_json()
+        return jsonify(clients)
 
-#         name = medicine_data.get('name')
-#         producer = medicine_data.get('producer')
-#         price = medicine_data.get('price')
-#         expiration_date = medicine_data.get('expiration_date')
-#         quantity = medicine_data.get('quantity')
-#         category = medicine_data.get('category')
-#         medical_prescription = medicine_data.get('medical_prescription')
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-#         cursor = mysql.connection.cursor()
+# Route to delete a client
+@app.route('/api/delete-client/<int:id>', methods=['DELETE'])
+def delete_client(id):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM Clients WHERE Client_ID = %s", (id,))
+        client = cursor.fetchone()
 
-#         cursor.execute('''INSERT INTO Medicines (name, producer, price, expiration_date, quantity, category, medical_prescription) 
-#                           VALUES (%s, %s, %s, %s, %s, %s, %s)''', 
-#                           (name, producer, price, expiration_date, quantity, category, medical_prescription))
+        if not client:
+            return jsonify({'error': 'Client not found'}), 404
 
-#         mysql.connection.commit()
+        cursor.execute("DELETE FROM Clients WHERE Client_ID = %s", (id,))
+        mysql.connection.commit()
+        return jsonify({'message': 'Client deleted successfully!'})
 
-#         return jsonify({'message': 'Medicine added successfully!'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-#     except Exception as e:
-#         print(f"Error: {str(e)}")
-#         return jsonify({'error': str(e)}), 500
+# Route to update client data
+@app.route('/api/update-client', methods=['POST'])
+def update_client():
+    # Get the updated client data from the request
+    data = request.get_json()
 
-#     finally:
-#         if cursor:
-#             cursor.close()
+    client_id = data.get('id')
+    first_name = data.get('first_name')
+    last_name = data.get('last_name')
+    phone_number = data.get('phone_number')
+    email = data.get('email')
+    address = data.get('address')
+
+    # Create a MySQL connection and cursor
+    cursor = mysql.connection.cursor()
+
+    try:
+        # Prepare the SQL query to update the client
+        query = """
+        UPDATE clients
+        SET first_name = %s, last_name = %s, phone = %s, email = %s, address = %s
+        WHERE Client_ID = %s
+        """
+        cursor.execute(query, (first_name, last_name, phone_number, email, address, client_id))
+
+        # Commit the changes to the database
+        mysql.connection.commit()
+
+        # Return success response
+        return jsonify({"message": "success"})
+
+    except Exception as e:
+        # Rollback in case of error
+        mysql.connection.rollback()
+        print(f"Error updating client: {e}")
+        return jsonify({"message": "failure"}), 500
+
+    finally:
+        cursor.close()
+
+@app.route('/builders')
+def builders():
+    return render_template('builders.html')
+
+@app.route('/api/get-builders', methods=['GET'])
+def get_builders():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM Builders")
+    builders = cursor.fetchall()
+    return jsonify(builders)
+
+# Delete builder by ID
+@app.route('/api/delete-builder/<int:id>', methods=['DELETE'])
+def delete_builder(id):
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute("DELETE FROM Builders WHERE Builder_ID = %s", (id,))
+        mysql.connection.commit()
+        return jsonify({"message": "success"})
+    except Exception as e:
+        mysql.connection.rollback()
+        return jsonify({"message": "failure", "error": str(e)}), 500
+    finally:
+        cursor.close()
+
+# Update builder data by ID
+@app.route('/api/update-builder', methods=['POST'])
+def update_builder():
+    data = request.get_json()
+
+    builder_id = data.get('id')
+    first_name = data.get('first_name')
+    last_name = data.get('last_name')
+    phone = data.get('phone')
+    email = data.get('email')
+    address = data.get('address')
+    salary = data.get('salary')
+
+    cursor = mysql.connection.cursor()
+
+    try:
+        # SQL query to update builder
+        query = """
+        UPDATE Builders
+        SET First_Name = %s, Last_Name = %s, Phone = %s, Email = %s, 
+            Address = %s, Salary = %s
+        WHERE Builder_ID = %s
+        """
+        cursor.execute(query, (first_name, last_name, phone, email, address, salary, builder_id))
+        mysql.connection.commit()
+        return jsonify({"message": "success"})
+
+    except Exception as e:
+        mysql.connection.rollback()
+        return jsonify({"message": "failure", "error": str(e)}), 500
+    finally:
+        cursor.close()
 
 @app.route('/projects')
 def projects():
     return render_template('projects.html')
 
-# @app.route('/api/get-purchases')
-# def get_purchases():
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cursor.execute('''
-#         SELECT pm.id, p.name AS patient_name, m.name AS medicine_name, m.producer AS producer_name, pm.sale_date, pm.quantity, m.price * pm.quantity AS total_price
-#         FROM Patients_medicines pm
-#         JOIN Patients p ON pm.id_patient = p.id
-#         JOIN Medicines m ON pm.id_medicine = m.id
-#         ORDER BY pm.sale_date DESC
-#     ''')
-#     purchases = cursor.fetchall()
-#     cursor.close()
-#     return jsonify(purchases)
+@app.route('/api/get-projects', methods=['GET'])
+def get_projects():
+    try:
+        cursor = mysql.connection.cursor()
+        query = """
+        SELECT 
+            pb.Project_ID,
+            c.First_Name AS Client_First_Name,
+            c.Last_Name AS Client_Last_Name,
+            b.First_Name AS Builder_First_Name,
+            b.Last_Name AS Builder_Last_Name,
+            pb.Start_Date,
+            pb.Project_Status,
+            pb.Project_Budget
+        FROM Projects_Builders pb
+        JOIN Clients c ON pb.Client_ID = c.Client_ID
+        JOIN Builders b ON pb.Builder_ID = b.Builder_ID
+        """
+        cursor.execute(query)
+        projects = cursor.fetchall()
 
-# @app.route('/go_add_purchase')
-# def go_add_purchase():
-#     return render_template('add_purchase.html')
+        # Convert data to JSON format
+        project_list = [
+            {
+                'Project_ID': project[0],
+                'Client_Name': f"{project[1]} {project[2]}",
+                'Builder_Name': f"{project[3]} {project[4]}",
+                'Start_Date': project[5],
+                'Project_Status': project[6],
+                'Project_Budget': float(project[7]),
+            }
+            for project in projects
+        ]
+        return jsonify(project_list)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-# @app.route('/api/add_purchase', methods=['POST'])
-# def add_purchase():
-#     try:
-#         data = request.get_json()
+# API to delete a project
+@app.route('/api/delete-project/<int:project_id>', methods=['DELETE'])
+def delete_project(project_id):
+    try:
+        cursor = mysql.connection.cursor()
+        query = "DELETE FROM Projects_Builders WHERE Project_ID = %s"
+        cursor.execute(query, (project_id,))
+        mysql.connection.commit()
+        return jsonify({'message': 'success'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-#         patient_name = data.get('patient_name')
-#         patient_surname = data.get('patient_surname')
-#         cnp = data.get('cnp')
-#         medicine_name = data.get('medicine_name')
-#         producer_name = data.get('producer_name')
-#         quantity = data.get('quantity')
+# API to update a project's details
+@app.route('/api/update-project', methods=['POST'])
+def update_project():
+    try:
+        data = request.json
+        project_id = data['Project_ID']
+        client_id = data.get('Client_ID')
+        builder_id = data.get('Builder_ID')
+        start_date = data['Start_Date']
+        project_status = data['Project_Status']
+        project_budget = data['Project_Budget']
 
-#         cursor = mysql.connection.cursor()
-
-        
-#         cursor.execute("SELECT id FROM Patients WHERE cnp = %s", (cnp,))
-#         patient = cursor.fetchone()
-
-#         cursor.execute("SELECT id FROM Medicines WHERE name = %s AND producer = %s", (medicine_name, producer_name))
-#         medicine = cursor.fetchone()
-
-#         if not patient:
-#             return jsonify({'success': False, 'message': 'Patient not found'}), 400
-
-#         if not medicine:
-#             return jsonify({'success': False, 'message': 'Medicine not found'}), 400
-
-#         cursor.execute("""
-#             INSERT INTO Patients_medicines (id_patient, id_medicine, quantity)
-#             VALUES (%s, %s, %s)
-#         """, (patient[0], medicine[0], quantity))
-        
-#         mysql.connection.commit()
-
-#         return jsonify({'success': True, 'message': 'Purchase added successfully!'})
-
-#     except MySQLdb.Error as e:
-#         print("Error inserting data:", e)
-#         mysql.connection.rollback()
-#         return jsonify({'success': False, 'error': str(e)}), 500
-
-#     finally:
-#         cursor.close()
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
+        cursor = mysql.connection.cursor()
+        query = """
+        UPDATE Projects_Builders
+        SET Client_ID = %s, Builder_ID = %s, Start_Date = %s, Project_Status = %s, Project_Budget = %s
+        WHERE Project_ID = %s
+        """
+        cursor.execute(query, (client_id, builder_id, start_date, project_status, project_budget, project_id))
+        mysql.connection.commit()
+        return jsonify({'message': 'success'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+for rule in app.url_map.iter_rules():
+    print(rule.endpoint)

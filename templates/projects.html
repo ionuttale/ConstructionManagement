@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/css/navigation.css">
+    <link rel="stylesheet" href="../static/css/clients.css">  
+</head>
+<body class="clients">
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('builders') }}">Builders</a></li>
+                <li><a href="{{ url_for('clients') }}" class="active">Clients</a></li>
+                <li><a href="{{ url_for('projects') }}">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Clients List</h1>
+        <input type="text" id="search-input" placeholder="Search clients by name...">
+        <div class="clients-list">
+            <table id="table1">
+                <thead>
+                    <tr>
+                        <th>
+                            Project ID
+                            <button class="icon-button" onclick="sortTable('table1', 0)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Client Name
+                            <button class="icon-button" onclick="sortTable('table1', 1)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Builder Name
+                            <button class="icon-button" onclick="sortTable('table1', 2)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Start Date
+                            <button class="icon-button" onclick="sortTable('table1', 3)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Project Status
+                        </th>
+                        <th>
+                            Project Budget
+                            <button class="icon-button" onclick="sortTable('table1', 5)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Operations
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="projects-list">
+                    <!-- Data will be dynamically populated using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    
+        <!-- Modal for Editing Client -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Edit Client</h2>
+                <form id="updateForm">
+                    <input type="hidden" id="client_id" name="client_id">
+                    
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                    
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" required>
+                    
+                    <label for="phone_number">Phone:</label>
+                    <input type="text" id="phone_number" name="phone_number" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                    
+                    <div class="modal-footer">
+                        <button class="button" type="submit">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/projects.js"></script>    
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="..\static\css\navigation.css">
+    <link rel="stylesheet" href="..\static\css\clients.css">  
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('builders') }}">Builders</a></li>
+                <li><a href="{{ url_for('clients') }}">Clients</a></li>
+                <li><a href="{{ url_for('projects') }}">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Builders List</h1>
+        <input type="text" id="search-input" placeholder="Search by name, specialization, or phone number...">
+        <div class="builders-list">
+            <table id="table1" data-sort-order="asc">
+                <thead>
+                    <tr>
+                        <th>
+                            First Name
+                            <button class="icon-button" onclick="sortTable('table1', 0)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Last Name
+                            <button class="icon-button" onclick="sortTable('table1', 1)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Specialization
+                        </th>
+                        <th>
+                            Hiring Date
+                            <button class="icon-button" onclick="sortTable('table1', 3)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Experience (Years)
+                            <button class="icon-button" onclick="sortTable('table1', 7)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Salary
+                            <button class="icon-button" onclick="sortTable('table1', 8)">
+                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                                    
+                                    </svg>
+                            </button>
+                        </th>
+                        <th>
+                            Operations
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="builder-list">
+                    <!-- Data will be dynamically populated using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="..\static\js\builders.js"></script>    
+</body>
+</html>
