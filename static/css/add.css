@@ -1,117 +1,156 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-    color: #2f774e;
+  font-family: 'Georgia', serif; /* A classic, academic font */
+  margin: 0;
+  padding: 0;
+  background-color: #D1C4E9; /* Lighter lavender background */
+  color: #2C1E63; /* Darker purple text */
 }
 
 body::-webkit-scrollbar {
-  display: none; /* This hides the scrollbar in Webkit browsers (e.g., Chrome, Safari) */
+  display: none; /* Hide the scrollbar in Webkit browsers */
 }
 
-.container{
-    width: 92%;
-    margin: 0 auto;
-    margin-top: 10px;
-    height: 100%;
-    /* border: 2px solid red; */
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
+.container {
+  width: 92%;
+  margin: 0 auto;
+  margin-top: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-around;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Space between inputs and button */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between inputs and button */
+  padding: 20px;
+  background-color: #B39DDB; /* Lighter purple background for forms */
+  border-radius: 8px;
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="date"], input[type="gender"] {
-    padding: 15px;
-    font-size: 1.2rem;
-    background-color: rgb(37, 37, 37); 
-    color: #2f774e;
-    border: 1px solid rgb(37, 37, 37); 
-    border-radius: 8px;
-    outline: none;
+form input,
+form select {
+  padding: 15px;
+  font-size: 1.2rem;
+  background-color: #D1C4E9; /* Lighter background */
+  color: #2C1E63; /* Darker purple text */
+  border: 1px solid #9575CD; /* Slightly darker purple border */
+  border-radius: 8px;
+  outline: none;
+  width: 95%; /* Ensures inputs stretch to full width */
 }
 
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="date"]:focus, input[type="gender"]:focus {
-    border-color: #2f774e;
-    box-shadow: 0 0 8px rgba(47, 119, 78, 0.5);
-}
-
-select {
-    padding: 15px;
-    font-size: 1.2rem;
-    background-color: rgb(37, 37, 37);
-    color: #2f774e;
-    border: 1px solid rgb(37, 37, 37);
-    border-radius: 8px;
-    outline: none;
-    width: 100%; /* Make the select width fill its container */
-    max-width: 300px; /* Optional: you can limit the max-width if desired */
-    margin: 0 auto; /* Center the select horizontally */
-}
-
-/* Apply focus styles to the select element */
-select:focus {
-    border-color: #2f774e;
-    box-shadow: 0 0 8px rgba(47, 119, 78, 0.5);
+form input:focus,
+form select:focus {
+  border-color: #673AB7; /* Darker purple border on focus */
+  box-shadow: 0 0 8px rgba(103, 58, 183, 0.5); /* Purple glow effect */
 }
 
 form label {
-    margin: auto;
-    display: block;
-    margin: 10px 0 5px;
-  }
-  
-  form input {
-    width: 30; /* Ensure inputs fill the width */
-    padding: 8px;
-    margin: auto;
-    margin-bottom: 15px;
-    border: 1px solid #000000c9; /* Dark border for inputs */
-    border-radius: 4px;
-    background-color: #222; /* Slightly darker background for inputs */
-    color: #2f774e; /* Green text */
-  }
+  margin: auto;
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 1.2rem;
+  color: #2C1E63; /* Dark purple for labels */
+}
 
-  /* Style for buttons inside the modal-footer */
+/* Add padding and border radius to give depth to inputs */
+.add-edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between each form field */
+  padding: 20px;
+  background-color: #B39DDB; /* Lighter purple background */
+  border-radius: 12px;
+  border: 2px solid #9575CD; /* Slightly darker purple border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.add-edit-container input,
+.add-edit-container select {
+  padding: 15px;
+  font-size: 1.2rem;
+  background-color: #D1C4E9; /* Lighter purple */
+  color: #2C1E63; /* Dark purple text */
+  border: 1px solid #9575CD; /* Slightly darker purple border */
+  border-radius: 8px;
+  width: 100%;
+}
+
+.add-edit-container input:focus,
+.add-edit-container select:focus {
+  border-color: #673AB7; /* Darker purple border on focus */
+  box-shadow: 0 0 8px rgba(103, 58, 183, 0.5); /* Purple glow effect */
+}
+
+.add-edit-container label {
+  color: #2C1E63; /* Dark purple for labels */
+  font-size: 1.2rem;
+}
+
+.add-edit-container .submit-btn {
+  background-color: #9575CD; /* Lighter purple for submit button */
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.add-edit-container .submit-btn:hover {
+  background-color: #673AB7; /* Darker purple on hover */
+}
+
+/* Additional padding and styles for textareas */
+.add-edit-container textarea {
+  padding: 15px;
+  font-size: 1.2rem;
+  background-color: #D1C4E9; /* Lighter purple */
+  color: #2C1E63; /* Dark purple text */
+  border: 1px solid #9575CD; /* Slightly darker purple border */
+  border-radius: 8px;
+  resize: vertical;
+  min-height: 150px;
+  width: 100%;
+}
+
+.add-edit-container textarea:focus {
+  border-color: #673AB7; /* Darker purple border on focus */
+  box-shadow: 0 0 8px rgba(103, 58, 183, 0.5); /* Purple glow effect */
+}
+
 .modal-footer {
-    display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    margin: auto;
-  }
-  
-  /* Targeting button inside .modal-footer */
-  .modal-footer button {
-    padding: 10px 20px;
-    background-color: #2f774e; /* Green background */
-    color: rgb(0, 0, 0); /* Black text */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 30px;
-  }
-  
-  /* Change background color of footer button on hover */
-  .modal-footer button:hover {
-    background-color: #4CAF50; /* Light green on hover */
-  }
-  
-  /* Additional styles for the submit button specifically */
-  .modal-footer button[type="submit"] {
-    background-color: #2f774e; /* Green background for submit button */
-    color: rgb(0, 0, 0); /* Black text */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* Hover effect for submit button */
-  .modal-footer button[type="submit"]:hover {
-    background-color: #4CAF50; /* Light green on hover */
-  }
+  display: flex;
+  justify-content: flex-end;
+  margin: auto;
+}
+
+.modal-footer button {
+  padding: 10px 20px;
+  background-color: #9575CD; /* Lighter purple for buttons */
+  color: #F5E1F1; /* Light lavender text */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.modal-footer button:hover {
+  background-color: #673AB7; /* Slightly darker purple on hover */
+}
+
+.modal-footer button[type="submit"] {
+  background-color: #9575CD; /* Lighter purple background */
+  color: #F5E1F1; /* Light lavender text */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-footer button[type="submit"]:hover {
+  background-color: #673AB7; /* Slightly darker purple on hover */
+}

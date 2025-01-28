@@ -1,146 +1,149 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-    color: #2f774e;
+  font-family: 'Georgia', serif; /* Elegant serif font for a classic academic look */
+  margin: 0;
+  padding: 0;
+  background-color: #EDE7F6; /* Lighter lavender background */
+  color: #4A148C; /* Dark purple text */
 }
 
 body::-webkit-scrollbar {
-  display: none; /* This hides the scrollbar in Webkit browsers (e.g., Chrome, Safari) */
+  display: none; /* Hides the scrollbar in Webkit browsers */
 }
 
-.container{
-    width: 92%;
-    margin: 0 auto;
-    margin-top: 20px;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    justify-content: space-evenly;
+.container {
+  width: 92%;
+  margin: 0 auto;
+  margin-top: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: space-evenly;
 }
 
 .box {
-    background-color: rgb(37, 37, 37); 
-    padding: 20px; /* Added padding for consistent spacing */
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgb(37, 37, 37);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 20px;
-    width: 350px; /* Fixed width for uniform size */
-    height: auto; /* Fixed height for uniform size */
-    flex-shrink: 0; /* Prevent shrinking */
+  background-color: #D1C4E9; /* Lighter lavender background for boxes */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6); /* Dark, subtle shadow */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 350px;
+  height: auto;
+  flex-shrink: 0;
 }
 
-.card{
-    background-color: rgb(37, 37, 37); 
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgb(37, 37, 37);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-    justify-content: space-around
+.card {
+  background-color: #EDE7F6; /* Lightened background for cards */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6); /* Dark shadows */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: space-around;
 }
 
 .icon {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin:auto;
-    margin-bottom: 5px;
-    margin-right: 20px;
-  }
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-right: 20px;
+}
 
 .icon img {
-    width: 100px;
-  }
+  width: 70%; /* Smaller icons to match dark academia theme */
+  filter: grayscale(100%) contrast(200%); /* Make icons look vintage */
+}
 
 .title {
-    font-size: 20px;
-  }
+  font-size: 22px;
+  color: #4A148C; /* Dark purple for titles */
+}
 
 .count {
-    font-size: 30px;
-    font-style: bold;
-    color: #2f774e;
-  }
+  font-size: 32px;
+  font-weight: bold;
+  color: #6A1B9A; /* Darker purple for count */
+}
 
 button {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: #2f774e;
-    text-decoration: underline;
-    font-weight: normal;
-    float: center;
-  }
-  
-button:hover {
-    text-decoration: none;
-    color: #4CAF50;
-  }
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #6A1B9A; /* Dark purple text */
+  text-decoration: underline;
+  font-weight: normal;
+  font-size: 16px;
+}
 
-  .euro-symbol {
-    margin-left: 1px; /* Adjust margin as needed */
-  }
-  
+button:hover {
+  text-decoration: none;
+  color: #4A148C; /* Darker purple when hovered */
+}
+
+.euro-symbol {
+  margin-left: 1px;
+}
+
 .table-container {
-    margin: 40px auto;
-    max-width: 1200px;
-    max-height: 400px;
-    padding: 20px;
-    background-color: rgb(37, 37, 37); 
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgb(37, 37, 37);
-    overflow: hidden;
+  margin: 40px auto;
+  max-width: 1200px;
+  max-height: 400px;
+  padding: 20px;
+  background-color: #D1C4E9; /* Lightened background for table container */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
 }
 
 h1 {
   text-align: left;
   margin-bottom: 15px;
-  color: #2f774e;
+  color: #4A148C; /* Dark purple color for titles */
 }
 
-h2{
+h2 {
   text-align: center;
   margin-bottom: 15px;
-  color: #2f774e;
+  color: #4A148C;
 }
 
 table {
-    text-align: center;
+  text-align: center;
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
 thead th {
-  background-color: rgb(15, 15, 15);
-  color: #2f774e;
-  padding: 10px;
+  background-color: #6A1B9A; /* Darker purple header */
+  color: #F5E1F1; /* Light lavender text */
+  padding: 12px;
   font-size: 20px;
   text-align: center;
 }
 
 tbody td {
   font-size: 18px;
-  padding: 10px;
-  border-bottom: 1px;
+  padding: 12px;
+  border-bottom: 1px solid #B39DDB; /* Slightly darker purple border */
   text-align: center;
 }
 
 tbody tr:hover {
-  background-color: rgb(15, 15, 15);
+  background-color: #B39DDB; /* Lighter purple on hover */
+  color: #fff;
 }
 
 .icon-button {
@@ -148,22 +151,29 @@ tbody tr:hover {
   border: none;
   padding: 10px;
   cursor: pointer;
-  position: center;
 }
 
 .icon-button svg {
   width: 24px;
   height: 24px;
+  filter: grayscale(100%) contrast(200%); /* Vintage icon filter */
 }
 
-.chart-income{
-  display: flex;               /* Enable Flexbox */
-  flex-direction: column;      /* Stack header and canvas vertically */
-  justify-content: center;     /* Vertically center content */
-  align-items: center;         /* Horizontally center content */
-  width: 100%;                 /* Set the container's width */
-  height: auto;               /* Set the container's height */
-  margin-top: 20px;            /* Optional: space above the container */
+.chart-income {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
   text-align: center;
-  margin-bottom: 10px;   
+  margin-bottom: 10px;
+}
+
+/* Additional class for icons to be used in cards and buttons */
+.icon-button .fa,
+.icon-button .fas {
+  color: #6A1B9A; /* Darker purple for icon buttons */
+  font-size: 24px;
 }

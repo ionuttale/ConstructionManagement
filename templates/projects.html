@@ -30,57 +30,25 @@
                         <th>
                             Project ID
                             <button class="icon-button" onclick="sortTable('table1', 0)">
-                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                    
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                    
-                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
-                                    
-                                    </svg>
+                                <!-- Sort icon here -->
                             </button>
                         </th>
                         <th>
                             Client Name
                             <button class="icon-button" onclick="sortTable('table1', 1)">
-                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                    
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                    
-                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
-                                    
-                                    </svg>
+                                <!-- Sort icon here -->
                             </button>
                         </th>
                         <th>
                             Builder Name
                             <button class="icon-button" onclick="sortTable('table1', 2)">
-                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                    
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                    
-                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
-                                    
-                                    </svg>
+                                <!-- Sort icon here -->
                             </button>
                         </th>
                         <th>
                             Start Date
                             <button class="icon-button" onclick="sortTable('table1', 3)">
-                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                    
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                    
-                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
-                                    
-                                    </svg>
+                                <!-- Sort icon here -->
                             </button>
                         </th>
                         <th>
@@ -89,15 +57,7 @@
                         <th>
                             Project Budget
                             <button class="icon-button" onclick="sortTable('table1', 5)">
-                                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                    
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                    
-                                    <g id="SVGRepo_iconCarrier"> <path d="M16 18L16 16M16 6L20 10.125M16 6L12 10.125M16 6L16 13" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8 18L12 13.875M8 18L4 13.875M8 18L8 11M8 6V8" stroke="#211715" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
-                                    
-                                    </svg>
+                                <!-- Sort icon here -->
                             </button>
                         </th>
                         <th>
@@ -112,6 +72,37 @@
         </div>
     </div>
 
-    <script src="../static/js/projects.js"></script>    
+    <!-- Edit Project Modal -->
+    <div id="editProjectModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Project</h2>
+            <form id="updateProjectForm">
+                <label for="project_id">Project ID</label>
+                <input type="text" id="project_id" name="project_id" disabled>
+
+                <!-- Using Client_ID for editing (not name) -->
+                <label for="client_id">Client ID</label>
+                <input type="text" id="client_id" name="client_id" required>
+
+                <!-- Using Builder_ID for editing (not name) -->
+                <label for="builder_id">Builder ID</label>
+                <input type="text" id="builder_id" name="builder_id" required>
+
+                <label for="start_date">Start Date</label>
+                <input type="date" id="start_date" name="start_date" required>
+
+                <label for="project_status">Project Status</label>
+                <input type="text" id="project_status" name="project_status" required>
+
+                <label for="project_budget">Project Budget</label>
+                <input type="text" id="project_budget" name="project_budget" required>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../static/js/projects.js"></script>
 </body>
 </html>
